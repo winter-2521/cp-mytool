@@ -43,5 +43,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://winter-2521.github.io/cp-mytool/"
+  "homepage": "https://winter-2521.github.io/cp-mytool/",
+  "devDependencies": {
+    "@types/d3": "^7.4.3"
+  }
 }
