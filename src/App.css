@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+svg {
+  border: 1px solid #ccc;
+  margin-top: 20px;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  margin-right: 10px;
+}
+
+button {
+  padding: 5px 10px;
+}
