@@ -18,12 +18,12 @@ const Graph: React.FC<GraphProps> = ({ nodes, links }) => {
     const width = svgRef.current?.clientWidth || 500;
     const height = svgRef.current?.clientHeight || 500;
 
-    const simulation = d3.forceSimulation(nodes)
-      .force('link', d3.forceLink(links).id((d: any) => d.id).distance(50))
-      .force('charge', d3.forceManyBody().strength(-300))
-      .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('collide', d3.forceCollide(30))
-      .on('tick', ticked);
+    // const simulation = d3.forceSimulation(nodes)
+    //   .force('link', d3.forceLink(links).id((d: any) => d.id).distance(50))
+    //   .force('charge', d3.forceManyBody().strength(-300))
+    //   .force('center', d3.forceCenter(width / 2, height / 2))
+    //   .force('collide', d3.forceCollide(30))
+    //   .on('tick', ticked);
 
     const link = svg.append('g')
       .attr('stroke', '#999')

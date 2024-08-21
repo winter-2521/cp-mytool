@@ -13,10 +13,6 @@ interface ControlsProps {
 const Controls: React.FC<ControlsProps> = ({ nodes, edges, isConnected, setNodes, setEdges, setIsConnected }) => {
   return (
     <div className="controls">
-      <div className="tabs">
-        <button className="tab">Generate</button>
-        <button className="tab">Visualize</button>
-      </div>
       <div className="control-panel">
         <label>
           Nodes:
