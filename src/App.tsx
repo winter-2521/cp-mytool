@@ -1,62 +1,64 @@
+// src/App.tsx
 import React, { useState } from 'react';
-import Graph from './Graph';
-
-type Node = { id: number };
-type Edge = { source: number; target: number };
-
-const generateGraph = (nodes: number, edges: number): { nodes: Node[]; edges: Edge[] } => {
-  const graphNodes: Node[] = Array.from({ length: nodes }, (_, i) => ({ id: i }));
-  const graphEdges: Edge[] = [];
-
-  for (let i = 0; i < edges; i++) {
-    const source = Math.floor(Math.random() * nodes);
-    const target = Math.floor(Math.random() * nodes);
-    if (source !== target) {
-      graphEdges.push({ source, target });
-    }
-  }
-
-  return { nodes: graphNodes, edges: graphEdges };
-};
+import Header from './components/Header';
+import Controls from './components/Controls';
+import VisualizeInput from './components/VisualizeInput';
+import Graph from './components/Graph';
+import { generateGraphData, Node, Link } from './utils/graphGenerator';
+import './App.css';
 
 const App: React.FC = () => {
   const [nodes, setNodes] = useState<number>(5);
   const [edges, setEdges] = useState<number>(4);
-  const [graphData, setGraphData] = useState<{ nodes: Node[]; edges: Edge[] } | null>(null);
+  const [isConnected, setIsConnected] = useState<boolean>(true);
+  const [activeTab, setActiveTab] = useState<'generate' | 'visualize'>('generate');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const graph = generateGraph(nodes, edges);
-    setGraphData(graph);
+  const { nodes: graphNodes, links: graphLinks } = generateGraphData(nodes, edges, isConnected);
+
+  const visualizeGraph = () => {
+    // ここでグラフを再描画するロジックを実装できます
   };
 
   return (
-    <div>
-      <h1>Graph Generator</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Nodes:
-          <input
-            type="number"
-            value={nodes}
-            onChange={(e) => setNodes(Number(e.target.value))}
-            min="5"
-            max="1500"
-          />
-        </label>
-        <label>
-          Edges:
-          <input
-            type="number"
-            value={edges}
-            onChange={(e) => setEdges(Number(e.target.value))}
-            min="4"
-            max="1400"
-          />
-        </label>
-        <button type="submit">Generate</button>
-      </form>
-      {graphData && <Graph nodes={graphData.nodes} edges={graphData.edges} />}
+    <div className="app">
+      <Header />
+      <div className="content">
+        <div className="graph-visualization">
+          <Graph nodes={graphNodes} links={graphLinks} />
+        </div>
+        <div className="controls">
+          <div className="tabs">
+            <button
+              className={`tab ${activeTab === 'generate' ? 'active' : ''}`}
+              onClick={() => setActiveTab('generate')}
+            >
+              Generate
+            </button>
+            <button
+              className={`tab ${activeTab === 'visualize' ? 'active' : ''}`}
+              onClick={() => setActiveTab('visualize')}
+            >
+              Visualize
+            </button>
+          </div>
+          {activeTab === 'generate' ? (
+            <Controls
+              nodes={nodes}
+              edges={edges}
+              isConnected={isConnected}
+              setNodes={setNodes}
+              setEdges={setEdges}
+              setIsConnected={setIsConnected}
+            />
+          ) : (
+            <VisualizeInput
+              setNodes={setNodes}
+              setEdges={setEdges}
+              visualizeGraph={visualizeGraph}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };
